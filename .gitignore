@@ -2,5 +2,6 @@
 env
 settings.py
 .vscode
-/media
+media
 *.sqlite3
+__pycache__
