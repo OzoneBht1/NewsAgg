@@ -3,4 +3,4 @@ env
 settings.py
 .vscode
 /media
-.sqlite3
+*.sqlite3
