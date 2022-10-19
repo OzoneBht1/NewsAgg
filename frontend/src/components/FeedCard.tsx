@@ -20,48 +20,69 @@ import {
   MoreVert,
   Share,
 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+
 
 const StyledImg = styled("img")({
   width: "30px",
   height: "30px",
 });
 
-const FeedCard = () => {
+interface FeedCardProps{
+  title : string;
+  id? : number;
+  author : string;
+  content : string;
+  created : string;
+  image : string;
+  source : string;
+  summary : string;
+  created_ad? : string;  
+
+}
+
+
+const FeedCard : React.FC<FeedCardProps> = (props) => {
+  const navigate = useNavigate();
+  
+  const clickHandler = (event : React.MouseEvent<HTMLDivElement> | React.MouseEvent<HTMLImageElement> | undefined)=>{
+    event?.preventDefault();
+    navigate('/login', {props : props} as never)    
+  
+    
+
+  }
+  
   return (
     <Box gap={20}>
-      <Card
+      <Card 
         sx={{
           maxWidth: "300px",
           marginTop: 5,
           marginBottom: 5,
-          marginLeft: 8.3,
+          marginLeft: 7,
         }}
       >
-        <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-              R
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVert />
-            </IconButton>
-          }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+        <CardHeader onClick={clickHandler}
+          
+          title={props.title}
+          component={Link}
+          subheader={props.created}
+          to="/"
         />
         <CardMedia
+        onClick={clickHandler}
           sx={{ height: "190px", width: "100%" }}
           component="img"
-          image="https://www.onlinekhabar.com/wp-content/uploads/2022/10/asley-sapkota-dangol-NRN-swimming.jpg"
+          image={props.image}
           alt="Paella dish"
+          
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+          {props.summary}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
