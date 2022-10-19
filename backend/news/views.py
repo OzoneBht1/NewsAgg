@@ -44,6 +44,7 @@ def scraperEkantipur(request):
     # this contains the individual links to detail page of all main news
     summaries = [news.find('p')
                  for news in news_list if news is not None]
+  
     summary = [x for x in summaries if x]
     # this list consists of summaries from other sections apart from the top news.
 
@@ -51,14 +52,17 @@ def scraperEkantipur(request):
         if y.parent.parent.get('class')[0] != 'main-news':
             y.decompose()
 
-    summ = [x.text for x in summary if x]
-    final_list = [x for x in summ if x != '']
-    contentsLst, authors, timePublished, images = newsDetailEkantipur(
+    summ = [x.text for x in summary if x and len(x.text.strip())!=0]
+    for each in summ:
+        print(each + "\n" + "present" + "\n")
+           
+    contents, authors, timePublished, images = newsDetailEkantipur(
         detail_links)
     # obtaining the important fields from inside the detail page
     contentsLst = []
 
-    for content in contentsLst:
+
+    for content in contents:
         contentsStr = ""
         for each in content:
             contentsStr += each.text + "\n\n"
@@ -68,6 +72,7 @@ def scraperEkantipur(request):
     # getting the unique id of images
 
     # '../media/posts_images/{imageIds[i]}.jpg'
+    print(len(titles),len(summ),len(contentsLst),len(authors),len(timePublished))
 
     # get or create method, if the model doesn't exist, it will create
     for i in range(len(images)):
@@ -82,9 +87,11 @@ def scraperEkantipur(request):
             filename = f"{imageIds[i]}.jpg"
 
             fp = BytesIO()
-            fp.write(response.content)
+            fp.write(response.content)     
+            
+            
 
-            news = News(title=titles[i], summary=final_list[i], content=contentsLst[i],
+            news = News(title=titles[i], summary=summ[i], content=contentsLst[i],
                         author=authors[i], created=timePublished[i], source="Ekantipur")
 
             news.save()
@@ -92,7 +99,7 @@ def scraperEkantipur(request):
 
         # Write image block to temporary file
 
-    return HttpResponse("Fetched")
+    return HttpResponse(summ)
 
 
 def newsDetailEkantipur(detail_links):
@@ -299,7 +306,6 @@ def nagarik_scraper(request):
             fp = BytesIO()
             fp.write(response.content)
 
-            print(summaries[i])
 
             news = News(title=titles[i], summary=summaries[i], content=contentsLst[i],
                         author=authors[i], created=timePublished[i], source="Nagarik News")
@@ -346,7 +352,7 @@ def scraperNagarikDetail(detailLinks):
 
 class NewsListApi(generics.ListAPIView):
     current_date = datetime.now()
-    previous_date = current_date - timedelta(days=2)
+    previous_date = current_date - timedelta(days=3)
     queryset = News.objects.filter(
         created_ad__range=[previous_date, current_date])
 

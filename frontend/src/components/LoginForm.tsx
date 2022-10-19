@@ -16,7 +16,6 @@ export const LoginForm: React.FC<{
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [wasTouched, setWasTouched] = useState(false);
-  console.log(props.error);
 
   const touchHandler = () => {
     setWasTouched(true);

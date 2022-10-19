@@ -16,7 +16,6 @@ const Login = () => {
   const dataHandler = async (data: obj) => {
     setError(false);
     const returnedData = await dispatch(checkLogin(data));
-    console.log(returnedData);
     if (!!returnedData) {
       setError(true);
     } else {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   List,
@@ -15,25 +15,47 @@ import ekantipur from "./images/ekantipur.png";
 import nagarik from "./images/nagarik.png";
 import onlinekhabar from "./images/onlinekhabar.png";
 import { styled } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
 const StyledImg = styled("img")({
   width: "30px",
   height: "30px",
 });
 const Sidebar = () => {
+  const [source, setSource] = useState("Ekantipur");
+  const navigate = useNavigate();
+
+  const ekantipurClickHandler = ()=>{
+    setSource("ekantipur");
+  }
+  const onlinekhabarClickHandler = ()=>{
+    setSource("onlinekhabar" );
+  }
+  const nagarikClickHandler = ()=>{
+    setSource("nagarik");
+  }
+
+  useEffect(()=>{
+    navigate(`/home/${source}`);   
+
+  }, [source, navigate])
+
   return (
     <Box
-      borderRight={1}
-      width="18%"
+    borderRight={1}
+      width="25%"
       p={2}
+
+      maxWidth="250px"
+      minWidth="190px"
       sx={{ display: { xs: "none", sm: "block" } }}
     >
-      <Box sx={{ position: "fixed" }}>
-        <List>
+      <Box display="flex" position="fixed" >
+        <List sx={{position : "relative"}}>
           <ListItem>
             <Typography variant="h6">News Source</Typography>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding onClick={ekantipurClickHandler}>
             <ListItemButton component="a" href="#">
               <ListItemIcon>
                 <StyledImg src={ekantipur} alt="ekantipur"></StyledImg>
@@ -41,7 +63,7 @@ const Sidebar = () => {
               <ListItemText primary="Ekantipur" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding onClick={onlinekhabarClickHandler}>
             <ListItemButton component="a" href="#">
               <ListItemIcon>
                 <StyledImg src={onlinekhabar} alt="OnlineKhabar"></StyledImg>
@@ -49,7 +71,7 @@ const Sidebar = () => {
               <ListItemText primary="OnlineKhabar" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding onClick={nagarikClickHandler}>
             <ListItemButton component="a" href="#">
               <ListItemIcon>
                 <StyledImg src={nagarik} alt="nagarik"></StyledImg>

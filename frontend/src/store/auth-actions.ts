@@ -23,21 +23,17 @@ export const checkLogin = (loginInfo: obj) => {
         }),
       });
       if (!response.ok) {
-        console.log(response);
         throw new Error(
           "The entered email or password was incorrect. Please try again."
         );
       }
       const data = await response.json();
-      console.log(data);
       return data;
     };
     try {
       const data: authTokenState = await sendRequest();
 
       if (!!data.access && !!data.refresh) {
-        console.log("Dispatching");
-        console.log(data);
         dispatch(authActions.loginUser(data));
       } else {
       }

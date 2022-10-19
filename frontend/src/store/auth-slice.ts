@@ -20,10 +20,8 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     loginUser(state, action: PayloadAction<authTokenState>) {
-      console.log(action.payload);
       state.authTokens = action.payload;
       const token = action.payload.access;
-      console.log(token);
       state.user = jwt_decode(token);
       localStorage.setItem("authTokens", JSON.stringify(action.payload));
     },
