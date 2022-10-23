@@ -9,10 +9,12 @@ interface LoginProps {
   password: string;
 }
 
-export const LoginForm: React.FC<{
+interface LoginFormProps {
   onReceiveData: (data: LoginProps) => void;
   error: boolean;
-}> = (props) => {
+}
+
+export const LoginForm = ({ onReceiveData, error }: LoginFormProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [wasTouched, setWasTouched] = useState(false);
@@ -21,7 +23,7 @@ export const LoginForm: React.FC<{
     setWasTouched(true);
   };
 
-  let receivedError = props.error;
+  let receivedError = error;
 
   let hasError = !wasTouched && receivedError;
 
@@ -36,7 +38,7 @@ export const LoginForm: React.FC<{
     const enteredEmail = email;
     const enteredPass = password;
 
-    props.onReceiveData({ email: enteredEmail, password: enteredPass });
+    onReceiveData({ email: enteredEmail, password: enteredPass });
     setPassword("");
   };
 

@@ -1,25 +1,22 @@
 import React from "react";
-import { Box, Icon, styled, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import FeedCard from "./FeedCard";
 import { newsStruct } from "../pages/HomePage";
-import RefreshIcon from '@mui/icons-material/Refresh';
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 interface FeedProps {
   data: newsStruct[];
-  onClickRefreshHandler : ()=>void
+  onClickRefreshHandler: () => void;
 }
 
-
 const StyledTypography = styled(Typography)({
-  margin :'1.5rem',
-  fontWeight : 500,
-  color : "#0e0d4c",
-  fontFamily : "Ubuntu, Helvetica, sans-serif"
+  margin: "1.5rem",
+  fontWeight: 500,
+  color: "#0e0d4c",
+  fontFamily: "Ubuntu, Helvetica, sans-serif",
 });
 
-
-
-const Feed: React.FC<FeedProps> = ({ data, onClickRefreshHandler }) => {
+const Feed = ({ data, onClickRefreshHandler }: FeedProps) => {
   console.log(data);
 
   const today = new Date().toLocaleDateString();
@@ -34,21 +31,23 @@ const Feed: React.FC<FeedProps> = ({ data, onClickRefreshHandler }) => {
     return newsDate !== today;
   });
 
-
   return (
     <Box p={2} width="80%">
       <Box display="flex" alignItems="center" justifyContent="center">
-      <StyledTypography variant="h4">Latest News From Ekantipur</StyledTypography>
-    
-        <RefreshIcon sx={{width : "32px", height : "32px"}} onClick={onClickRefreshHandler}/>
-        </Box>
+        <StyledTypography variant="h4">
+          Latest News From Ekantipur
+        </StyledTypography>
+
+        <RefreshIcon
+          sx={{ width: "32px", height: "32px" }}
+          onClick={onClickRefreshHandler}
+        />
+      </Box>
 
       <Box display="flex" flexWrap="wrap" justifyContent="align-left">
-      
         {todaysNews.map((newsItem) => {
           return (
             <>
-           
               <FeedCard
                 key={newsItem.id}
                 title={newsItem.title}
@@ -61,9 +60,7 @@ const Feed: React.FC<FeedProps> = ({ data, onClickRefreshHandler }) => {
               />
             </>
           );
-        })}      
-      
-      
+        })}
 
         {prevNews.map((newsItem) => {
           return (

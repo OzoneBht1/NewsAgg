@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Avatar,
   Card,
   CardActions,
   CardContent,
@@ -10,54 +9,45 @@ import {
   IconButton,
   Typography,
   Box,
-  styled,
 } from "@mui/material";
 import {
   Bookmark,
   BookmarkBorder,
   Favorite,
   FavoriteBorder,
-  MoreVert,
   Share,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
-
-const StyledImg = styled("img")({
-  width: "30px",
-  height: "30px",
-});
-
-interface FeedCardProps{
-  title : string;
-  id? : number;
-  author : string;
-  content : string;
-  created : string;
-  image : string;
-  source : string;
-  summary : string;
-  created_ad? : string;  
-
+interface FeedCardProps {
+  title: string;
+  id?: number;
+  author: string;
+  content: string;
+  created: string;
+  image: string;
+  source: string;
+  summary: string;
+  created_ad?: string;
 }
 
-
-const FeedCard : React.FC<FeedCardProps> = (props) => {
+const FeedCard = (props: FeedCardProps) => {
   const navigate = useNavigate();
-  
-  const clickHandler = (event : React.MouseEvent<HTMLDivElement> | React.MouseEvent<HTMLImageElement> | undefined)=>{
-    event?.preventDefault();
-    navigate('/login', {props : props} as never)    
-  
-    
 
-  }
-  
+  const clickHandler = (
+    event:
+      | React.MouseEvent<HTMLDivElement>
+      | React.MouseEvent<HTMLImageElement>
+      | undefined
+  ) => {
+    event?.preventDefault();
+    navigate("/login", { props: props } as never);
+  };
+
   return (
     <Box gap={20}>
-      <Card 
+      <Card
         sx={{
           maxWidth: "300px",
           marginTop: 5,
@@ -65,24 +55,23 @@ const FeedCard : React.FC<FeedCardProps> = (props) => {
           marginLeft: 7,
         }}
       >
-        <CardHeader onClick={clickHandler}
-          
+        <CardHeader
+          onClick={clickHandler}
           title={props.title}
           component={Link}
           subheader={props.created}
           to="/"
         />
         <CardMedia
-        onClick={clickHandler}
+          onClick={clickHandler}
           sx={{ height: "190px", width: "100%" }}
           component="img"
           image={props.image}
           alt="Paella dish"
-          
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-          {props.summary}
+            {props.summary}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>

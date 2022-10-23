@@ -4,47 +4,43 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
 import { fetchData, scrape } from "../helpers/FetchData";
-import {useParams} from "react-router-dom"
-
+import { useParams } from "react-router-dom";
 
 export interface newsStruct {
-  id : number;
-  author : string;
-  content : string;
-  created : string;
-  image : string;
-  source : string;
-  summary : string;
-  title : string;
-  created_ad : string;  
+  id: number;
+  author: string;
+  content: string;
+  created: string;
+  image: string;
+  source: string;
+  summary: string;
+  title: string;
+  created_ad: string;
 }
 
-
-const HomePage : React.FC = () => {
+const HomePage = () => {
   const params = useParams();
   const [data, setData] = useState<newsStruct[]>([]);
 
-  const handleRefresh = async()=>{
+  const handleRefresh = async () => {
     await scrape(params.source!);
     await fetchData(params.source!);
-  }
+  };
 
   useEffect(() => {
     const getInitialData = async () => {
       const data = await fetchData(params.source!);
-      setData(data)
+      setData(data);
     };
     getInitialData();
   }, [params.source]);
-
-
 
   return (
     <Box>
       <Navbar />
       <Stack direction="row" spacing={2}>
         <Sidebar />
-        <Feed data={data} onClickRefreshHandler = {handleRefresh}  />
+        <Feed data={data} onClickRefreshHandler={handleRefresh} />
       </Stack>
     </Box>
   );

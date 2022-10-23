@@ -1,5 +1,4 @@
 import { authActions } from "./auth-slice";
-import { useNavigate } from "react-router-dom";
 
 type obj = { email: string; password: string };
 

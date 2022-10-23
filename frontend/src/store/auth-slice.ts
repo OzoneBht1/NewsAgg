@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import jwt_decode from "jwt-decode";
 
 interface authState {
-  authTokens: { access: string; refresh: string } | null;
+  authTokens: authTokenState | null;
   user: {} | null;
 }
 type authTokenState = {
