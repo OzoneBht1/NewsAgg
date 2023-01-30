@@ -1,4 +1,4 @@
-### News Aggregator
+# News Aggregator
 News Aggregator is a web application that collects news articles from various Nepalese news sources and presents them in a clean, user-friendly interface. The application is built using Django Rest Framework and React, making use of web scraping and REST API to gather and present data.
 
 ## Features
